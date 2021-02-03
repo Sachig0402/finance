@@ -1,7 +1,6 @@
 <template>
     <div>
-        我是首页
-        <router-view></router-view>
+        404
     </div>
 </template>
 

@@ -1,13 +1,14 @@
 <template>
     <div>
-        我是首页
-        <router-view></router-view>
+        组件2
     </div>
 </template>
 
 <script>
     export default {
-        
+        mounted(){
+            console.log('tabs2重复渲染了')
+        }
     }
 </script>
 
