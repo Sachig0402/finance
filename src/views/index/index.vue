@@ -54,7 +54,9 @@
         </el-card>
       </el-col>
       <el-col :span="6">
-        <el-card>456</el-card>
+        <el-card>
+          <div style="height: 240px" ref="analysis2"></div>
+        </el-card>
       </el-col>
     </el-row>
     <el-row style="margin-top: 20px" class="time" :gutter="24">
@@ -97,10 +99,11 @@ export default {
     drawLine() {
       // 初始化容器
       var myChart = this.$echarts.init(this.$refs["analysis"]);
+      var myChart2 = this.$echarts.init(this.$refs["analysis2"]);
       // 初始化图表配置选项
       var option = {
         title: {
-          text: "ECharts 入门示例",
+          text: "产品销售情况",
         },
         tooltip: {},
         legend: {
@@ -118,8 +121,45 @@ export default {
           },
         ],
       };
+      var option2 = {
+        // legend: {
+        //   top: "auto",
+        // },
+        toolbox: {
+          show: true,
+          feature: {
+            mark: { show: true },
+            dataView: { show: false, readOnly: true },
+            restore: { show: true },
+            saveAsImage: { show: false },
+          },
+        },
+        series: [
+          {
+            name: "面积模式",
+            type: "pie",
+            radius: [35, 75],
+            center: ["50%", "50%"],
+            roseType: "area",
+            itemStyle: {
+              borderRadius: 3,
+            },
+            data: [
+              { value: 40, name: "a" },
+              { value: 38, name: "b" },
+              { value: 32, name: "c" },
+              { value: 30, name: "d" },
+              { value: 28, name: "e" },
+              { value: 26, name: "f" },
+              { value: 22, name: "g" },
+              { value: 18, name: "h" },
+            ],
+          },
+        ],
+      };
       // 设置成功
       myChart.setOption(option);
+      myChart2.setOption(option2);
     },
   },
   mounted() {
