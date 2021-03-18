@@ -23,6 +23,7 @@
       </el-radio-group>
       <keep-alive>
         <component :is="currentTabComponent" class="tab"></component>
+        <!-- :is是指显示哪个组件 -->
       </keep-alive>
     </el-card>
   </div>
@@ -36,7 +37,7 @@ export default {
   mixins: [breadCrumb],
   data() {
     return {
-      radio1: 1,
+      radio1: 2,
     };
   },
   computed: {

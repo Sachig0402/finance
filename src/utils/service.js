@@ -12,6 +12,8 @@ const service = axios.create({
 // 请求拦截:请求之前做什么事
 // 在headers里加入了token
 service.interceptors.request.use(//里面有两个函数,一个是请求成功执行的函数,第二个是请求失败执行的函数
+// ! 注意是request,是请求拦截
+// ! interceptor是拦截器
     // 请求成功执行的函数
     (config) => {
         // console.log("这是请求拦截")
@@ -29,6 +31,7 @@ service.interceptors.request.use(//里面有两个函数,一个是请求成功�
 
 // 相应拦截 在响应被 then 或 catch 处理前拦截它们
 service.interceptors.response.use(
+// !注意是response,是响应拦截
     (response) => {
         // console.log("这里是响应拦截", response)
         const res = response.data
