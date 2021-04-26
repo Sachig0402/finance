@@ -25,4 +25,15 @@ new Vue({
   router,
   store,
   render: h => h(App)
+  // * 上面这行等价于下面这个
+  /* render: function (h) {
+        return h(App)
+    } */
+  // * 等价于下面
+  // * vue规定render函数默认接收createElement函数当参数
+  /* render: function (createElement) {
+        return createElement(App)
+    } */
 }).$mount('#app')
+// ! $mount 和el类似,挂载的意思
+
