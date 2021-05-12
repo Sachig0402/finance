@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-row :gutter="24" style="margin-bottom: 20px">
+      <!-- gutter是间距 -->
       <el-col :span="6">
         <el-card shadow="hover" class="in">
           <div style="float: left">

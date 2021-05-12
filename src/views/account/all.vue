@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item v-for="(item, index) in breadlist" :key="index">{{
+      <el-breadcrumb-item v-for="(item, index) in breadList" :key="index">{{
         item
       }}</el-breadcrumb-item>
     </el-breadcrumb>
@@ -26,6 +26,7 @@
         </el-col>
       </el-row>
     </el-card>
+
     <el-card>
       <el-table
         :data="tableData"
@@ -50,10 +51,20 @@
             <el-button size="mini" @click="handleEdit(scope.row)"
               >编辑</el-button
             >
-            <el-button type="danger" size="mini">删除</el-button>
-            <el-button size="mini">{{
+            <el-button type="danger" size="mini" @click="delete1(scope.row)"
+              >删除</el-button
+            >
+            <template v-if="scope.row.status == 1">
+              <el-button size="mini" @click="forbidden(scope.row)"
+                >禁用</el-button
+              >
+            </template>
+            <template v-else>
+              <el-button size="mini" @click="start(scope.row)">启用</el-button>
+            </template>
+            <!-- <el-button size="mini">{{
               scope.row.status == 1 ? "禁用" : "启用"
-            }}</el-button>
+            }}</el-button> -->
           </template>
         </el-table-column>
       </el-table>
@@ -100,8 +111,8 @@ export default {
   data() {
     return {
       tableData: [],
-      selected: [],
       dialogFormVisible: false,
+      selected: [],
       form: {
         character: "",
         remark: "",
@@ -111,9 +122,9 @@ export default {
         character: [
           { required: true, message: "请选择角色", trigger: "change" },
         ],
-        remark: [{ required: true, message: "请输入备注", trigger: "blur" }],
+        remark: [{ required: true, message: "请输入备注", trigger: "change" }],
         reason: [
-          { required: true, message: "请输入创建原因", trigger: "blur" },
+          { required: true, message: "请输入创建原因", trigger: "change" },
         ],
       },
     };
@@ -125,12 +136,57 @@ export default {
     list() {
       get("/all").then((res) => {
         this.tableData = res.data.list;
+        console.log(2, this.tableData);
       });
     },
     handleSelectionChange(selection) {
-      // console.log(selection)
       this.selected = selection.map((item) => {
         return item.account;
+      });
+    },
+    create() {
+      this.dialogFormVisible = true;
+      this.$nextTick(() => {
+        this.$refs["forms"].resetFields();
+        /* this.form.character = "";
+        this.form.remark = "";
+        this.form.reason = ""; */
+      });
+    },
+    handleEdit(row) {
+      this.dialogFormVisible = true;
+      this.$nextTick(() => {
+        this.form = {
+          character: row.character,
+          remark: row.remark,
+          reason: row.reason,
+        };
+      });
+      console.log(row);
+    },
+    onOk() {
+      this.$refs["forms"].validate((valid) => {
+        if (valid) {
+          this.$message.success("创建成功");
+          this.list();
+          this.dialogFormVisible = false;
+          this.$nextTick(() => {
+            this.$refs["forms"].resetFields();
+            /* this.form.character = "";
+            this.form.remark = "";
+            this.form.reason = ""; */
+          });
+        }
+      });
+    },
+    cancel1() {
+      this.dialogFormVisible = false;
+      this.$nextTick(() => {
+        this.$refs["forms"].resetFields();
+        /* this.form.character = "";
+        this.form.remark = "";
+        this.form.reason = ""; */
+        // console.log("清空弹出框的数据了");
       });
     },
     operate(type) {
@@ -140,51 +196,31 @@ export default {
         type: "success",
       });
     },
-    create() {
-      this.dialogFormVisible = true;
-      this.$nextTick(() => {
-        // this.$refs["forms"].resetFields();
-        this.form.character = "";
-        this.form.remark = "";
-        this.form.reason = "";
-        // console.log("清空弹出框的数据了");
+    forbidden(row) {
+      // console.log(row);
+      row.status = 2;
+      this.$notify({
+        title: "成功",
+        message: row.account + "已禁用",
+        type: "success",
       });
     },
-    onOk() {
-      this.$refs["forms"].validate((valid) => {
-        if (valid) {
-          console.log(this.form.character);
-          this.$message.success("创建成功");
-          this.list();
-          this.dialogFormVisible = false;
-          // this.$refs["forms"].resetFields();
-          this.$nextTick(() => {
-            // this.$refs["forms"].resetFields();
-            this.form.character = "";
-            this.form.remark = "";
-            this.form.reason = "";
-            // console.log("清空弹出框的数据了");
-          });
-        }
+    start(row) {
+      // console.log(row);
+      row.status = 1;
+      this.$notify({
+        title: "成功",
+        message: row.account + "已启用",
+        type: "success",
       });
     },
-    handleEdit(row) {
-      this.dialogFormVisible = true;
-      this.form = {
-        character: row.character,
-        remark: row.remark,
-        reason: row.reason,
-      };
-    },
-    cancel1() {
-      this.dialogFormVisible = false;
-      this.$nextTick(() => {
-        // this.$refs["forms"].resetFields();
-        this.form.character = "";
-        this.form.remark = "";
-        this.form.reason = "";
-        // console.log("清空弹出框的数据了");
+    delete1(row) {
+      this.$notify({
+        title: "成功",
+        message: row.account + "已删除",
+        type: "success",
       });
+      this.list();
     },
   },
 };

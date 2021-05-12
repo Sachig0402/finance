@@ -4,7 +4,7 @@ import { Message } from 'element-ui'
 import { getToken } from "@/utils/auth"
 // import { get } from 'core-js/fn/dict';
 const service = axios.create({
-    baseURL: "localhost:8080", // url=base url+request url
+    baseURL: "localhost:8080", // url=base_url+request_url
     timeout: 5000 //请求超时,5秒就不再请求了
 })
 
@@ -29,14 +29,14 @@ service.interceptors.request.use(//里面有两个函数,一个是请求成功�
 )
 
 
-// 相应拦截 在响应被 then 或 catch 处理前拦截它们
+// 响应拦截 在响应被 then 或 catch 处理前拦截它们
 service.interceptors.response.use(
 // !注意是response,是响应拦截
     (response) => {
         // console.log("这里是响应拦截", response)
         const res = response.data
         if (!res.success) {
-            Message({
+            Message({//!这是elementui里封装的方法,开头引用过这个方法
                 type: "error",
                 message: res.message || '请求错误'
             })

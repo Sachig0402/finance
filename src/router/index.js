@@ -17,6 +17,11 @@ const routes = [
         component: () => import("@/views/index/index.vue")
       },
       {
+        path: '/account',
+        name: 'Account',
+        redirect: "/account/all"
+      },
+      {
         path: "/account/all",
         name: "account_all",
         meta: {
@@ -61,7 +66,7 @@ const routes = [
         name: "product_all",
         meta: {
           bread: ["产品管理", "全部产品"],
-          keepAlive:true,
+          keepAlive: true,
         },
         component: () => import("@/views/product/all.vue"),
       },
@@ -93,26 +98,26 @@ const routes = [
         path: "/product/detail",
         name: "product_detail",
         meta: {
-          bread: ["产品管理", "全部产品","产品详情"],
-          keepAlive:true,
+          bread: ["产品管理", "全部产品", "产品详情"],
+          keepAlive: true,
         },
         component: () => import("@/views/product/detail.vue")
       },
       {
-        path:"/order/all",
-        name:"order_all",
-        meta:{
-          bread:["订单管理","所有订单"]
+        path: "/order/all",
+        name: "order_all",
+        meta: {
+          bread: ["订单管理", "所有订单"]
         },
-        component: ()=>import("@/views/order/all.vue")
+        component: () => import("@/views/order/all.vue")
       },
       {
-        path:"/client/info",
-        name:"client_info",
-        meta:{
-          bread:["客户管理","基本信息"]
+        path: "/client/info",
+        name: "client_info",
+        meta: {
+          bread: ["客户管理", "基本信息"]
         },
-        component: ()=>import("@/views/client/info.vue")
+        component: () => import("@/views/client/info.vue")
       },
     ]
   },
